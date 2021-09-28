@@ -1,0 +1,9 @@
+<h1>Create a Post </h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        Rating: <input type="text" name="rating" /><br />
+        Review: <input type="text" name="review" /><br />
+        Show: <input type="text" name="show_id" /><br />
+        User_id: <input type="text" name="user_id" /><br />        
+        <input type="submit" value="Post" />
+    </form>

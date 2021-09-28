@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<!-- 
+        The CSS styling code to decorate the form was sourced from: 
+        Source link : "https://www.codingnepalweb.com/2020/08/login-form-with-floating-label-animation.html"
+        Author: CodingNepal
+	-->
+	<style>
+		
+		@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: 'Poppins', sans-serif;
+		}
+
+		html,
+		body {
+			display: grid;
+			height: 100%;
+			width: 100%;
+			place-items: center;
+			background: #f2f2f2;
+			background: linear-gradient(-135deg, #de6262 ,#ffb88c);
+		}
+
+		.form_wrap {
+			width: 380px;
+			background: #fff;
+			border-radius: 15px;
+            
+			box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+		}
+
+		.form_wrap .title {
+			font-size: 35px;
+			font-weight: 600;
+			text-align: center;
+			line-height: 100px;
+			color: #fff;
+			user-select: none;
+			border-radius: 15px 15px 0 0;
+			background: linear-gradient(-135deg, #de6262 ,#ffb88c);
+		}
+
+		.form_wrap form {
+			padding: 20px;
+		}
+
+		.form_wrap form .field {
+			height: 50px;
+			width: 100%;
+			margin-top: 20px;
+			position: relative;
+		}
+
+		.form_wrap form .field input {
+			height: 100%;
+			width: 100%;
+			outline: none;
+			font-size: 17px;
+			padding-left: 20px;
+			border: 1px solid lightgrey;
+			border-radius: 25px;
+			transition: all 0.3s ease;
+		}
+
+		form .field input:valid {
+			border-color: #de6262;
+		}
+
+		form .content {
+			display: flex;
+			width: 100%;
+			height: 50px;
+			font-size: 16px;
+			align-items: center;
+			justify-content: space-around;
+		}
+
+		form .content .checkbox {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		form .content input {
+			width: 15px;
+			height: 15px;
+			background: red;
+		}
+
+		form .content label {
+			color: #262626;
+			user-select: none;
+			padding-left: 5px;
+		}
+
+		form .content .pass-link {
+			color: "";
+		}
+
+		form .field input[type="submit"] {
+			color: #fff;
+			border: none;
+			padding-left: 0;
+			margin-top: -10px;
+			font-size: 20px;
+			font-weight: 500;
+			cursor: pointer;
+			background: linear-gradient(-135deg, #de6260 ,#ffb880);
+			transition: all 0.3s ease;
+		}
+
+		form .field input[type="submit"]:active {
+			transform: scale(0.95);
+		}
+
+		form .signup-link {
+			color: #262626;
+			margin-top: 20px;
+			text-align: center;
+		}
+
+		form .pass-link a,
+		form .signup-link a {
+			color: #4158d0;
+			text-decoration: none;
+		}
+
+		form .pass-link a:hover,
+		form .signup-link a:hover {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="form_wrap">
+		<div class="title">
+			Login Form</div>
+		<form method="POST">
+			{% csrf_token %}
+			<div class="field">
+                <input type="text" name="username" placeholder="Username...">
+			</div>
+			
+			<div class="field">
+                <input type="password" name="password" placeholder="Password...">
+			</div>
+			<div class="field">
+				<input type="submit" name="Create User">
+			</div>
+		</form>
+	</div>
+	
+
+	{% if form.errors %}
+	<ul>
+		{% for key,value in form.errors.items %}
+		<li>{{ value }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+
+	{%for message in messages%}
+	<p>{{message}}</p>
+	{%endfor%}
+	
+	<p class="text-center">If you do not have an account, <a href="/register">Sign up</a> instead or head back to <a href="/homepage">homepage</a> </p>
+
+</body>
+
+</html>
+
+

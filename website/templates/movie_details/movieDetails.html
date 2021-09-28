@@ -1,0 +1,297 @@
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html,
+        body {
+            display: grid;
+            height: 100%;
+            width: 100%;
+            place-items: center;
+            background: #f2f2f2;
+            background: linear-gradient(-135deg, #de6262, #ffb88c);
+        }
+
+        .grid_wrapper {
+            margin-top: 80px;
+            display: grid;
+            grid-template-columns: auto auto;
+        }
+
+        .grid_lateral_wrap {
+            display: grid;
+            grid-template-columns: auto;
+        }
+
+        .rating_form {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .user_reviews {
+            margin-left: 20px;
+        }
+
+        .movie {
+            border-radius: 15px;
+            box-shadow: 0px 15px 20px rgb(0 0 0 / 10%);
+            background: white;
+            margin: 2px;
+            padding: 10px;
+            height: fit-content;
+            cursor: pointer;
+            max-width: 300px;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .poster {
+            width: 100%;
+            margin-bottom: 6px;
+            border-radius: 4px;
+        }
+
+        .title {
+            text-transform: uppercase;
+            color: red;
+            margin-bottom: 4px;
+            font-size: 24px;
+            text-decoration: solid;
+        }
+
+        .info {
+            font-size: 16px;
+            opacity: .8;
+            padding: 2px;
+        }
+
+        .header {
+            width: 100%;
+        }
+
+        .navbar {
+            top: 0;
+            position: fixed;
+            width: 100%;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .navbar li {
+            float: left;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .navbar li a {
+            display: block;
+            padding: 7px 50px;
+            text-decoration: none;
+            color: #C0C0C0;
+            border-left: 1px solid #C0C0C0;
+        }
+
+        .navbar li a:hover {
+            color: #fff;
+        }
+
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+        .wrapper {
+            width: 380px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+            padding-bottom: 0.02px;
+        }
+
+        .wrapper .title {
+            font-size: 35px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 100px;
+            color: #fff;
+            user-select: none;
+            border-radius: 15px 15px 0 0;
+            background: linear-gradient(-135deg, #c850c0, #4158d0);
+        }
+
+        .wrapper .review_item {
+            margin-left: 20px;
+            margin-right: 20px;
+            padding-left: 17px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border: 2px solid #4158d0;
+            border-radius: 25px;
+        }
+
+        .wrapper form {
+            padding: 20px;
+        }
+
+        .wrapper form .field {
+            height: 50px;
+            width: 100%;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .wrapper form .field input {
+            height: 100%;
+            width: 100%;
+            outline: none;
+            font-size: 17px;
+            padding-left: 20px;
+            border: 1px solid lightgrey;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        form .field input[type="submit"] {
+            color: #fff;
+            border: none;
+            padding-left: 0;
+            margin-top: -10px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            background: linear-gradient(-135deg, #c850c0, #4158d0);
+            transition: all 0.3s ease;
+        }
+
+        form .field input[type="submit"]:active {
+            transform: scale(0.95);
+        }
+
+        #credit_item {
+            font-size: 12px;
+            font-family: 'Lucida Sans';
+            font-weight: bold;
+        }
+
+        #review_title {
+            font-weight: bold;
+            font-size: 19px;
+            text-decoration: underline;
+        }
+    </style>
+    </style>
+    <title>Movie Details</title>
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <!-- nav-links -->
+            <ul>
+                {% if request.user.is_authenticated %}
+                <li><a href="/homepage">Home</a></li>
+                <li><a href="#">About</a></li>
+
+                <li style="float:right"><a href="/logout">Logout</a> </a></li>
+                <li style="float:right"><a href="#">Hello, {{request.user}}</a> </a></li>
+
+
+                {% else %}
+                <li><a href="/homepage">Home</a></li>
+                <li><a href="#">About</a></li>
+
+                <li style="float:right"><a href="/login">Login</a> </a></li>
+                <li style="float:right"><a href="/register">Register</a> </a></li>
+                {% endif %}
+
+
+
+            </ul>
+        </nav>
+    </header>
+
+    
+
+    <div class="grid_wrapper">
+
+
+
+        <div class="movie">
+            <img src={{show.image_url}} alt="" class="poster" />
+            <div class="title">{{show.show_title}}</div>
+            <br>
+            <div class="info">
+                <span class="info_item" id="length">Length: {{show.length}} Hrs</span><br>
+                <span class="info_item" id="year">Released: {{show.year}}</span><br>
+                <span class="info_item" id="rating">Rating: {{show_rating}}</span><br><br>
+                <span class="info_item" id="credits">CREDITS:</span><br>
+                <span class="info_item" id="credit_item">
+                    {%for credit in credits%}
+                    {{credit.person.fullname}} -- {{credit.role}}<br>
+                    {%endfor%}
+                </span>
+
+            </div>
+        </div>
+
+
+        <div class="grid_lateral_wrap">
+            {%if request.user.is_authenticated%}
+            <div class="rating_form">
+
+                <div class="wrapper">
+                    <div class="title">
+                        Add Rating</div>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="field">
+                            <input type="text" name="rating" placeholder="Rating...">
+                        </div>
+
+                        <div class="field">
+                            <input type="text" name="review" placeholder="Review...">
+                        </div>
+                        <div class="field">
+                            <input type="submit" value="Post" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="user_reviews">
+                <div class='wrapper'>
+                    <div class="title"> USER REVIEWS </div>
+                    {%for review in reviews%}
+                    <div class="review_item">
+                        <div id="review_title"> {{review.name}} <br></div>
+                        {{review.rating}} Stars<br>
+                        {{review.review}} <br>
+                    </div>
+                    {%endfor%}
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+    {%for message in messages%}
+	<p>{{message}}</p>
+	{%endfor%}   
+
+</body>
